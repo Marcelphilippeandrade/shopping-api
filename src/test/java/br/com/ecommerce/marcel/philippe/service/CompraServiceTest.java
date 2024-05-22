@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -77,7 +78,7 @@ class CompraServiceTest {
 		BDDMockito.given(compraRepository.saveAll(Mockito.anyList())).willReturn(compras);
 		BDDMockito.given(compraRepository.findAll()).willReturn(compras);
 		BDDMockito.given(compraRepository.findAllByUserIdentifier(USUARIO_IDENTIFICADOR)).willReturn(compras);
-		BDDMockito.given(compraRepository.findAllByDateGreaterThan(DATA_COMPRA)).willReturn(compras);
+		BDDMockito.given(compraRepository.findAllByDateGreaterThan(Mockito.any())).willReturn(compras);
 		BDDMockito.given(compraRepository.findById(PRODUTO_ID)).willReturn(Optional.of(compra));
 	}
 	
@@ -98,7 +99,7 @@ class CompraServiceTest {
 	
 	@Test
 	public void deveRetornarTodasAsComprasApartirDeUmaDeterminadaData() {
-		List<CompraDTO> compras = this.compraService.getByDate(obterDadosCompraDTO());
+		List<CompraDTO> compras = this.compraService.getByDate(DATA_COMPRA.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 		assertNotNull(compras);
 		assertEquals(DATA_COMPRA, compras.get(0).getDate());
 	}

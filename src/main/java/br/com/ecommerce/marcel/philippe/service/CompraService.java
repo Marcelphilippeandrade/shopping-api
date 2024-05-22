@@ -1,6 +1,7 @@
 package br.com.ecommerce.marcel.philippe.service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,8 +29,8 @@ public class CompraService {
 		return compras.stream().map(CompraDTO::convert).collect(Collectors.toList());
 	}
 
-	public List<CompraDTO> getByDate(CompraDTO compraDTO) {
-		List<Compra> compras = compraRepository.findAllByDateGreaterThan(compraDTO.getDate());
+	public List<CompraDTO> getByDate(String data) {
+		List<Compra> compras = compraRepository.findAllByDateGreaterThan(LocalDateTime.parse(data, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 		return compras.stream().map(CompraDTO::convert).collect(Collectors.toList());
 	}
 
