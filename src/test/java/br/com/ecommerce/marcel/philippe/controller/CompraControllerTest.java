@@ -4,9 +4,11 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +31,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import br.com.ecommerce.marcel.philippe.dto.CompraDTO;
 import br.com.ecommerce.marcel.philippe.dto.ItemDTO;
+import br.com.ecommerce.marcel.philippe.dto.RelatorioDTO;
 import br.com.ecommerce.marcel.philippe.service.CompraService;
+import br.com.ecommerce.marcel.philippe.service.RelatorioService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -43,7 +47,11 @@ class CompraControllerTest {
 	@MockBean
 	private CompraService compraService;
 	
+	@MockBean
+	private RelatorioService relatorioService;
+	
 	private CompraDTO compraDto;
+	private RelatorioDTO relatorioDto;
 	private List<CompraDTO> compras;
 	
 	private static final float COMPRA_TOTAL = 1000F;
@@ -52,11 +60,20 @@ class CompraControllerTest {
 	private static final String URL_BASE = "/shopping";
 	private static final String USUARIO_IDENTIFICADOR = "marcel";
 	private static final LocalDateTime COMPRA_DATA = LocalDateTime.now();
+
+	private static final Date DATA_INICIAL = new Date();
+	private static final Date DATA_FINAL = new Date();
+	private static final Float VALOR_MINIMO = 500F;
+
+	private static final Integer QUANTIDADE = 100;
+	private static final Double MEDIA = 50D;
+	private static final Double TOTAL = 1000D;
 	
 	@BeforeEach
 	public void setUp() {
 		compras = new ArrayList<>();
 		compraDto = obterDadosCompra();
+		relatorioDto = obterRelatorioCompra();
 		compras.add(compraDto);
 		BDDMockito.given(this.compraService.save(Mockito.any(CompraDTO.class))).willReturn(compraDto);
 	}
@@ -115,6 +132,34 @@ class CompraControllerTest {
 				.andExpect(content().string(containsString(Float.toString(compras.getFirst().getItems().getFirst().getPrice()))));
 	}
 	
+	@Test
+	public void deveBuscarComprasDadoUmaDataInicialOuUmaDataFinalOuUmValorMinimo() throws Exception {
+		String dataInicio = new SimpleDateFormat("dd/MM/yyyy").format(DATA_INICIAL);
+		String dataFim = new SimpleDateFormat("dd/MM/yyyy").format(DATA_FINAL);
+		
+		BDDMockito.given(this.relatorioService.getComprasByFilter(Mockito.any(Date.class), Mockito.any(Date.class), Mockito.any(Float.class))).willReturn(compras);
+		
+		mvc.perform(MockMvcRequestBuilders.get(URL_BASE + "/search" + "?dataInicio=" + dataInicio + "&" + "dataFim=" + dataFim + "&" + "valorMinimo=" + VALOR_MINIMO)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString(compras.getFirst().getUserIdentifier())));
+	}
+	
+	@Test
+	public void deveRetornarRelatorioDeComprasDadoUmaDataInicialEUmaDataFinal() throws Exception {
+		String dataInicio = new SimpleDateFormat("dd/MM/yyyy").format(DATA_INICIAL);
+		String dataFim = new SimpleDateFormat("dd/MM/yyyy").format(DATA_FINAL);
+		
+		BDDMockito.given(this.relatorioService.getReportByDate(Mockito.any(Date.class), Mockito.any(Date.class))).willReturn(relatorioDto);
+		
+		mvc.perform(MockMvcRequestBuilders.get(URL_BASE + "/report" + "?dataInicio=" + dataInicio + "&" + "dataFim=" + dataFim)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().string(containsString(Integer.toString(relatorioDto.getQuantidade()))))
+				.andExpect(content().string(containsString(Double.toString(relatorioDto.getMedia()))))
+				.andExpect(content().string(containsString(Double.toString(relatorioDto.getTotal()))));
+	}
+	
 	private String obterJsonRequisicaoPost() throws JsonProcessingException {
 		CompraDTO compraDto = obterDadosCompra();
 		ObjectMapper mapper = new ObjectMapper();
@@ -137,5 +182,13 @@ class CompraControllerTest {
 		
 		compraDto.setItems(itensDto);
 		return compraDto;
+	}
+	
+	private RelatorioDTO obterRelatorioCompra() {
+		RelatorioDTO relatorioDto = new RelatorioDTO();
+		relatorioDto.setQuantidade(QUANTIDADE);
+		relatorioDto.setMedia(MEDIA);
+		relatorioDto.setTotal(TOTAL);
+		return relatorioDto;
 	}
 }
