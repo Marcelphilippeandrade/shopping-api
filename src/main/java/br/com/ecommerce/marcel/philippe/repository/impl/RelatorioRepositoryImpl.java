@@ -44,6 +44,7 @@ public class RelatorioRepositoryImpl implements RelatorioRepository {
 		if (valorMinimo != null) {
 			query.setParameter("valorMinimo", valorMinimo);
 		}
+		
 		return query.getResultList();
 	}
 
