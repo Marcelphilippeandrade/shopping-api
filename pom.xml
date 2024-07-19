@@ -73,6 +73,19 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>br.com.ecommerce.marcel.philippe</exclude>
+						<exclude>br.com.ecommerce.marcel.philippe.modelo</exclude>
+						<exclude>br.com.ecommerce.marcel.philippe.dto.RelatorioDTO</exclude>
+						<exclude>br.com.ecommerce.marcel.philippe.repository.impl</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
