@@ -23,7 +23,7 @@ public class DTOConverterTest {
 	private static final String IDENTIFICADOR_PRODUTO = "12345";
 
 	@Test
-    public void testConvertItem() {
+    public void deveConveterUmItemParaItemDto() {
     	
         Item item = new Item();
         item.setProductIdentifier(IDENTIFICADOR_PRODUTO);
@@ -36,7 +36,7 @@ public class DTOConverterTest {
     }
 
     @Test
-    public void testConvertCompra() {
+    public void deveConverterUmaCompraParaCompraDto() {
         Item item1 = new Item();
         item1.setProductIdentifier(IDENTIFICADOR_PRODUTO);
         item1.setPrice(ITEM_PRECO);
