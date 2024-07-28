@@ -34,7 +34,7 @@ class RelatorioRepositoryImplTest {
 	}
 
 	@Test
-	void testGetComprasByFilters() {
+	void deveRetornarAsComprasApartirDosFiltros() {
 		List<Compra> expectedCompras = Arrays.asList(new Compra(), new Compra());
 
 		when(entityManager.createQuery(anyString())).thenReturn(query);
@@ -51,7 +51,7 @@ class RelatorioRepositoryImplTest {
 	}
 
 	@Test
-	void testGetRelatorioByDate() {
+	void deveRetornarRelatorioDasComprasApartirDasDatas() {
 		Object[] result = new Object[] { 1, 200.0, 100.0 };
 
 		when(entityManager.createNativeQuery(anyString())).thenReturn(query);
