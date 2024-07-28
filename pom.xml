@@ -88,7 +88,6 @@
 						<exclude>br.com.ecommerce.marcel.philippe</exclude>
 						<exclude>br.com.ecommerce.marcel.philippe.modelo</exclude>
 						<exclude>br.com.ecommerce.marcel.philippe.dto.RelatorioDTO</exclude>
-						<exclude>br.com.ecommerce.marcel.philippe.repository.impl</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
