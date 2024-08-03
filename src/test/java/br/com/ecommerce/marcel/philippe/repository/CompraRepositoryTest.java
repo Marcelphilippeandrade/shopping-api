@@ -25,7 +25,7 @@ class CompraRepositoryTest {
 	@MockBean
 	private CompraRepository mockCompraRepository;
 
-	private static final String USER_IDENTIFIER = "marcel";
+	private static final String USUARIO_IDENTIFICADOR = "06618938635";
 	private static final LocalDateTime COMPRA_DATA = LocalDateTime.now();
 	private static final float COMPRA_TOTAL = 1000F;
 	private static final long COMPRA_ID = 1L;
@@ -37,7 +37,7 @@ class CompraRepositoryTest {
 		compras = new ArrayList<Compra>();
 
 		Compra compra = new Compra();
-		compra.setUserIdentifier(USER_IDENTIFIER);
+		compra.setUserIdentifier(USUARIO_IDENTIFICADOR);
 		compra.setId(COMPRA_ID);
 		compra.setTotal(COMPRA_TOTAL);
 		compra.setDate(COMPRA_DATA);
@@ -46,8 +46,8 @@ class CompraRepositoryTest {
 
 	@Test
 	public void deveRetornarTodasAsComprasDeUmUsuario() {
-		when(mockCompraRepository.findAllByUserIdentifier(USER_IDENTIFIER)).thenReturn(compras);
-		List<Compra> comprasRetorno = compraRepository.findAllByUserIdentifier(USER_IDENTIFIER);
+		when(mockCompraRepository.findAllByUserIdentifier(USUARIO_IDENTIFICADOR)).thenReturn(compras);
+		List<Compra> comprasRetorno = compraRepository.findAllByUserIdentifier(USUARIO_IDENTIFICADOR);
 
 		assertNotNull(comprasRetorno);
 		assertEquals(compras.get(0).getUserIdentifier(), comprasRetorno.get(0).getUserIdentifier());

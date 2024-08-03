@@ -18,7 +18,7 @@ import br.com.ecommerce.marcel.philippe.modelo.Item;
 public class DTOConverterTest {
 
     private static final float TOTAL_COMPRA = 49.98F;
-	private static final String IDENTIFICADOR_USUARIO = "marcel";
+	private static final String IDENTIFICADOR_USUARIO = "06618938635";
 	private static final float ITEM_PRECO = 19.99F;
 	private static final String IDENTIFICADOR_PRODUTO = "12345";
 
