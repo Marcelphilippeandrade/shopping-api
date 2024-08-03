@@ -58,7 +58,7 @@ class CompraControllerTest {
 	private static final float PRODUTO_PRECO = 1000F;
 	private static final String PRODUTO_IDENTIFICADOR = "tv";
 	private static final String URL_BASE = "/shopping";
-	private static final String USUARIO_IDENTIFICADOR = "marcel";
+	private static final String USUARIO_IDENTIFICADOR = "06618938635";
 	private static final LocalDateTime COMPRA_DATA = LocalDateTime.now();
 
 	private static final Date DATA_INICIAL = new Date();

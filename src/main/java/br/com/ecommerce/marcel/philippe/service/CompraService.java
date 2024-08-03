@@ -9,7 +9,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ecommerce.marcel.philippe.communication.ProdutoService;
+import br.com.ecommerce.marcel.philippe.communication.UsuarioService;
 import br.com.ecommerce.marcel.philippe.dto.CompraDTO;
+import br.com.ecommerce.marcel.philippe.dto.ItemDTO;
+import br.com.ecommerce.marcel.philippe.dto.ProdutoDTO;
 import br.com.ecommerce.marcel.philippe.modelo.Compra;
 import br.com.ecommerce.marcel.philippe.repository.CompraRepository;
 
@@ -18,6 +22,12 @@ public class CompraService {
 
 	@Autowired
 	private CompraRepository compraRepository;
+	
+	@Autowired
+	private UsuarioService usuarioService;
+	
+	@Autowired
+	private ProdutoService produtoService;
 
 	public List<CompraDTO> getAll() {
 		List<Compra> compras = compraRepository.findAll();
@@ -43,10 +53,30 @@ public class CompraService {
 	}
 
 	public CompraDTO save(CompraDTO compraDTO) {
+
+		if (usuarioService.getUserByCpf(compraDTO.getUserIdentifier()) == null) {
+			return null;
+		}
+		
+		if (!existeProduto(compraDTO.getItems())) {
+			return null;
+		}
+		
 		compraDTO.setTotal(compraDTO.getItems().stream().map(i -> i.getPrice()).reduce((float) 0, Float::sum));
 		Compra compra = Compra.convert(compraDTO);
 		compra.setDate(LocalDateTime.now());
 		compra = compraRepository.save(compra);
 		return CompraDTO.convert(compra);
+	}
+
+	public boolean existeProduto(List<ItemDTO> items) {
+		for (ItemDTO item : items) {
+			ProdutoDTO produtoDTO = produtoService.getProdutoByIdentifier(item.getProductIdentifier());
+			if (produtoDTO == null) {
+				return false;
+			}
+			item.setPrice(produtoDTO.getPreco());
+		}
+		return true;
 	}
 }

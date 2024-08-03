@@ -16,14 +16,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import br.com.ecommerce.marcel.philippe.communication.UsuarioService;
 import br.com.ecommerce.marcel.philippe.dto.CompraDTO;
 import br.com.ecommerce.marcel.philippe.dto.ItemDTO;
+import br.com.ecommerce.marcel.philippe.dto.UsuarioDTO;
 import br.com.ecommerce.marcel.philippe.modelo.Compra;
 import br.com.ecommerce.marcel.philippe.modelo.Item;
 import br.com.ecommerce.marcel.philippe.repository.CompraRepository;
@@ -32,15 +35,20 @@ import br.com.ecommerce.marcel.philippe.repository.CompraRepository;
 @SpringBootTest
 class CompraServiceTest {
 	
+
 	@MockBean
 	private CompraRepository compraRepository;
 	
 	@Autowired
 	private CompraService compraService;
 	
+	@Mock
+	private UsuarioService usuarioService;
+	
+	private static final String USUARIO_IDENTIFICADOR_INEXISTENTE = "04782217890";
 	private static final long COMPRA_TOTAL = 100L;
 	private static final long COMPRA_ID = 1L;
-	private static final String USUARIO_IDENTIFICADOR = "marcel";
+	private static final String USUARIO_IDENTIFICADOR = "06618938635";
 	private static final float ITEM_PRECO = 1000F;
 	private static final String PRODUTO_IDENTIFICADOR = "tv";
 	private static final long PRODUTO_ID = 1L;
@@ -80,6 +88,9 @@ class CompraServiceTest {
 		BDDMockito.given(compraRepository.findAllByUserIdentifier(USUARIO_IDENTIFICADOR)).willReturn(compras);
 		BDDMockito.given(compraRepository.findAllByDateGreaterThan(Mockito.any())).willReturn(compras);
 		BDDMockito.given(compraRepository.findById(PRODUTO_ID)).willReturn(Optional.of(compra));
+		
+		BDDMockito.given(usuarioService.getUserByCpf(USUARIO_IDENTIFICADOR)).willReturn(new UsuarioDTO());
+		BDDMockito.given(usuarioService.getUserByCpf(USUARIO_IDENTIFICADOR_INEXISTENTE)).willReturn(new UsuarioDTO());
 	}
 	
 	@Test
@@ -122,6 +133,12 @@ class CompraServiceTest {
 		CompraDTO compraDto = this.compraService.save(obterDadosCompraDTO());
 		assertNotNull(compraDto);
 		assertEquals(USUARIO_IDENTIFICADOR, compraDto.getUserIdentifier());
+	}
+	
+	@Test
+	public void naoDeveSalvarCompraNaoExisteUsuario() {
+		CompraDTO compraDto = this.compraService.save(new CompraDTO());
+		assertNull(compraDto);
 	}
 	
 	private CompraDTO obterDadosCompraDTO() {
