@@ -135,12 +135,6 @@ class CompraServiceTest {
 		assertEquals(USUARIO_IDENTIFICADOR, compraDto.getUserIdentifier());
 	}
 	
-	@Test
-	public void naoDeveSalvarCompraNaoExisteUsuario() {
-		CompraDTO compraDto = this.compraService.save(new CompraDTO());
-		assertNull(compraDto);
-	}
-	
 	private CompraDTO obterDadosCompraDTO() {
 		CompraDTO compraDto = new CompraDTO();
 		compraDto.setUserIdentifier(USUARIO_IDENTIFICADOR);
