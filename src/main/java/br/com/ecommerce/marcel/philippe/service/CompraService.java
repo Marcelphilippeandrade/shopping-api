@@ -52,9 +52,9 @@ public class CompraService {
 		return null;
 	}
 
-	public CompraDTO save(CompraDTO compraDTO) {
+	public CompraDTO save(CompraDTO compraDTO, String key) {
 
-		if (usuarioService.getUserByCpf(compraDTO.getUserIdentifier()) == null) {
+		if (usuarioService.getUserByCpf(compraDTO.getUserIdentifier(), key) == null) {
 			return null;
 		}
 		

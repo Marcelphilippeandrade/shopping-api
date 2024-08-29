@@ -1,6 +1,7 @@
 package br.com.ecommerce.marcel.philippe.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -68,6 +69,7 @@ class CompraControllerTest {
 	private static final Integer QUANTIDADE = 100;
 	private static final Double MEDIA = 50D;
 	private static final Double TOTAL = 1000D;
+	private static final String KEY = "0d769a46-3919-4476-bc6d-f812da60144f";
 	
 	@BeforeEach
 	public void setUp() {
@@ -75,7 +77,7 @@ class CompraControllerTest {
 		compraDto = obterDadosCompra();
 		relatorioDto = obterRelatorioCompra();
 		compras.add(compraDto);
-		BDDMockito.given(this.compraService.save(Mockito.any(CompraDTO.class))).willReturn(compraDto);
+		BDDMockito.given(this.compraService.save(Mockito.any(CompraDTO.class), anyString())).willReturn(compraDto);
 	}
 
 	@Test
@@ -118,9 +120,10 @@ class CompraControllerTest {
 	
 	@Test
 	public void deveSalvarUmaNovaCompra() throws Exception {
-		BDDMockito.given(this.compraService.save(compraDto)).willReturn(compraDto);
+		BDDMockito.given(this.compraService.save(compraDto, KEY)).willReturn(compraDto);
 		
 		mvc.perform(MockMvcRequestBuilders.post(URL_BASE)
+				.header("key", KEY)
 				.content(this.obterJsonRequisicaoPost())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
