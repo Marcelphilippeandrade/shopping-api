@@ -18,6 +18,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.ecommerce.marcel.philippe.dto.ProdutoDTO;
+import br.com.ecommerce.marcel.philippe.exception.ProdutoNotFoundException;
 import br.com.ecommerce.marcel.philippe.exception.UsuarioNotFoundException;
 
 class ProdutoServiceTest {
@@ -37,7 +38,7 @@ class ProdutoServiceTest {
 	public void deveRetornarUmProdutoApartirDoIdentificador() {
 
 		ProdutoDTO produtoDTO = new ProdutoDTO();
-		String produtoIdentifier = "tv";
+		String produtoIdentifier = "a1";
 		produtoDTO.setProdutoIdentifier(produtoIdentifier);
 
 		ResponseEntity<Object> responseEntity = ResponseEntity.ok(produtoDTO);
@@ -53,7 +54,7 @@ class ProdutoServiceTest {
 		when(restTemplate.getForEntity(anyString(), eq(ProdutoDTO.class)))
 				.thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND));
 
-		assertThrows(UsuarioNotFoundException.class, () -> {
+		assertThrows(ProdutoNotFoundException.class, () -> {
 			produtoService.getProdutoByIdentifier("produto-inexistente");
 		});
 	}
