@@ -50,7 +50,7 @@ class CompraServiceTest {
 	private static final long COMPRA_ID = 1L;
 	private static final String USUARIO_IDENTIFICADOR = "06618938635";
 	private static final float ITEM_PRECO = 1000F;
-	private static final String PRODUTO_IDENTIFICADOR = "tv";
+	private static final String PRODUTO_IDENTIFICADOR = "a1";
 	private static final long PRODUTO_ID = 1L;
 	private static final float TOTAL_COMPRA = 1000F;
 	private static final LocalDateTime DATA_COMPRA = LocalDateTime.now();

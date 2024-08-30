@@ -6,7 +6,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.ecommerce.marcel.philippe.dto.ProdutoDTO;
-import br.com.ecommerce.marcel.philippe.exception.UsuarioNotFoundException;
+import br.com.ecommerce.marcel.philippe.exception.ProdutoNotFoundException;
 
 @Service
 public class ProdutoService {
@@ -19,7 +19,7 @@ public class ProdutoService {
 			ResponseEntity<ProdutoDTO> response = restTemplate.getForEntity(url, ProdutoDTO.class);
 			return response.getBody();
 		} catch (HttpClientErrorException.NotFound e) {
-			throw new UsuarioNotFoundException();
+			throw new ProdutoNotFoundException();
 		}
 	}
 }
