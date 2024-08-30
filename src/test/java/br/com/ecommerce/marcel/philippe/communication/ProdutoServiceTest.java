@@ -19,7 +19,6 @@ import org.springframework.web.client.RestTemplate;
 
 import br.com.ecommerce.marcel.philippe.dto.ProdutoDTO;
 import br.com.ecommerce.marcel.philippe.exception.ProdutoNotFoundException;
-import br.com.ecommerce.marcel.philippe.exception.UsuarioNotFoundException;
 
 class ProdutoServiceTest {
 
