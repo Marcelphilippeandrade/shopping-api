@@ -13,7 +13,7 @@ import br.com.ecommerce.marcel.philippe.exception.UsuarioNotFoundException;
 @Service
 public class UsuarioService {
 
-	@Value("${USER_API_URL:http://localhost:8080}")
+	@Value("${USER_API_URL:http://localhost:8080/user/cpf/}")
 	private String userApiURL;
 
 	public UsuarioDTO getUserByCpf(String cpf, String key) {
@@ -21,7 +21,7 @@ public class UsuarioService {
 		try {
 			RestTemplate restTemplate = new RestTemplate();
 
-			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(userApiURL + "/user/cpf/" + cpf);
+			UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(userApiURL + cpf);
 			builder.queryParam("key", key);
 
 			ResponseEntity<UsuarioDTO> response = restTemplate.getForEntity(builder.toUriString(), UsuarioDTO.class);

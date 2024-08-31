@@ -31,7 +31,7 @@ class UsuarioServiceTest {
 	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
-		ReflectionTestUtils.setField(usuarioService, "userApiURL", "http://localhost:8080");
+		ReflectionTestUtils.setField(usuarioService, "userApiURL", "http://localhost:8080/user/cpf/");
 	}
 
 	@Test

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ecommerce.marcel.philippe.dto.CompraDTO;
@@ -18,6 +19,8 @@ import br.com.ecommerce.marcel.philippe.dto.RelatorioDTO;
 import br.com.ecommerce.marcel.philippe.service.CompraService;
 import br.com.ecommerce.marcel.philippe.service.RelatorioService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+
 
 @RestController
 public class CompraController {
@@ -47,6 +50,7 @@ public class CompraController {
 	}
 
 	@PostMapping("/shopping")
+	@ResponseStatus(HttpStatus.CREATED)
 	public CompraDTO newCompra(@Valid @RequestHeader(name = "key", required=true) String key, @RequestBody CompraDTO compraDTO) {
 		return compraService.save(compraDTO, key);
 	}

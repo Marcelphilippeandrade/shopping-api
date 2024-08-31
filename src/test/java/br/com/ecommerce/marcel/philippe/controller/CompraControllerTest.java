@@ -127,7 +127,7 @@ class CompraControllerTest {
 				.content(this.obterJsonRequisicaoPost())
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
+				.andExpect(status().isCreated())
 				.andExpect(content().string(containsString(Float.toString(COMPRA_TOTAL))))
 				.andExpect(content().string(containsString(USUARIO_IDENTIFICADOR)))
 				.andExpect(content().string(containsString(COMPRA_DATA.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))))
