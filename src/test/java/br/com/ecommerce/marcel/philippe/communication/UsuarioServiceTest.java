@@ -31,14 +31,14 @@ class UsuarioServiceTest {
 	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
-		ReflectionTestUtils.setField(usuarioService, "userApiURL", "http://localhost:8080/user/cpf/");
+		ReflectionTestUtils.setField(usuarioService, "userApiURL", "http://localhost:8080/usuario/cpf/");
 	}
 
 	@Test
 	public void deveRetornarUmUsuarioApartirDeUmCpf() {
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
 		String cpf = "06618938635";
-		String key = "0d769a46-3919-4476-bc6d-f812da60144f";
+		String key = "972d5ecf-81c7-49ec-89b4-70a8acc69a19";
 		usuarioDTO.setCpf(cpf);
 
 		when(restTemplate.getForEntity(anyString(), any())).thenReturn(new ResponseEntity<>(usuarioDTO, HttpStatus.OK));

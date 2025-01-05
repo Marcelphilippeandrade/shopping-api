@@ -42,7 +42,7 @@ class ProdutoServiceTest {
 	public void deveRetornarUmProdutoApartirDoIdentificador() {
 
 		ProdutoDTO produtoDTO = new ProdutoDTO();
-		String produtoIdentifier = "a1";
+		String produtoIdentifier = "p3";
 		produtoDTO.setProdutoIdentifier(produtoIdentifier);
 		String url = productApiURL + produtoIdentifier;
 
