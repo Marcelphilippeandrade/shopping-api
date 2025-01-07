@@ -2,6 +2,7 @@ package br.com.ecommerce.marcel.philippe.converter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -50,7 +51,7 @@ public class DTOConverterTest {
         Compra compra = new Compra();
         compra.setUserIdentifier(IDENTIFICADOR_USUARIO);
         compra.setTotal(TOTAL_COMPRA);
-        compra.setDate(LocalDateTime.now());
+        compra.setDate(LocalDate.now());
         compra.setItems(items);
 
         CompraDTO compraDTO = DTOConverter.convert(compra);

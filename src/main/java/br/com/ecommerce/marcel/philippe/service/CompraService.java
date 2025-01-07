@@ -1,6 +1,6 @@
 package br.com.ecommerce.marcel.philippe.service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +40,7 @@ public class CompraService {
 	}
 
 	public List<CompraDTO> getByDate(String data) {
-		List<Compra> compras = compraRepository.findAllByDateGreaterThan(LocalDateTime.parse(data, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+		List<Compra> compras = compraRepository.findAllByDateGreaterThan(LocalDate.parse(data, DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 		return compras.stream().map(CompraDTO::convert).collect(Collectors.toList());
 	}
 
@@ -64,7 +64,7 @@ public class CompraService {
 		
 		compraDTO.setTotal(compraDTO.getItems().stream().map(i -> i.getPrice()).reduce((float) 0, Float::sum));
 		Compra compra = Compra.convert(compraDTO);
-		compra.setDate(LocalDateTime.now());
+		compra.setDate(LocalDate.now());
 		compra = compraRepository.save(compra);
 		return CompraDTO.convert(compra);
 	}

@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ class CompraServiceTest {
 	private static final String PRODUTO_IDENTIFICADOR = "p3";
 	private static final long PRODUTO_ID = 1L;
 	private static final float TOTAL_COMPRA = 1000F;
-	private static final LocalDateTime DATA_COMPRA = LocalDateTime.now();
+	private static final LocalDate DATA_COMPRA = LocalDate.now();
 	private static final String KEY = "972d5ecf-81c7-49ec-89b4-70a8acc69a19";
 	
 	@BeforeEach
@@ -111,7 +111,7 @@ class CompraServiceTest {
 	
 	@Test
 	public void deveRetornarTodasAsComprasApartirDeUmaDeterminadaData() {
-		List<CompraDTO> compras = this.compraService.getByDate(DATA_COMPRA.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+		List<CompraDTO> compras = this.compraService.getByDate(DATA_COMPRA.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 		assertNotNull(compras);
 		assertEquals(DATA_COMPRA, compras.get(0).getDate());
 	}

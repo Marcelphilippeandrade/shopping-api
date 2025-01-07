@@ -1,6 +1,6 @@
 package br.com.ecommerce.marcel.philippe.modelo;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,8 +34,8 @@ public class Compra {
 	private String userIdentifier;
 	private float total;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime date;
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	private LocalDate date;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "item", joinColumns = @JoinColumn(name = "compra_id"))

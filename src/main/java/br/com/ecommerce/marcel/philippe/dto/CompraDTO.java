@@ -1,6 +1,6 @@
 package br.com.ecommerce.marcel.philippe.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,8 +25,8 @@ public class CompraDTO {
 
 	private Float total;
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime date;
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	private LocalDate date;
 
 	@NotNull
 	private List<ItemDTO> items;
