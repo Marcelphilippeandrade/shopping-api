@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,7 +60,7 @@ class CompraControllerTest {
 	private static final String PRODUTO_IDENTIFICADOR = "tv";
 	private static final String URL_BASE = "/shopping";
 	private static final String USUARIO_IDENTIFICADOR = "06618938635";
-	private static final LocalDateTime COMPRA_DATA = LocalDateTime.now();
+	private static final LocalDate COMPRA_DATA = LocalDate.now();
 
 	private static final Date DATA_INICIAL = new Date();
 	private static final Date DATA_FINAL = new Date();
@@ -89,7 +89,7 @@ class CompraControllerTest {
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString(compras.getFirst().getUserIdentifier())))
 				.andExpect(content().string(containsString(Float.toString(compras.getFirst().getTotal()))))
-				.andExpect(content().string(containsString(compras.getFirst().getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))));
+				.andExpect(content().string(containsString(compras.getFirst().getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))));
 	}
 	
 	@Test
@@ -107,9 +107,9 @@ class CompraControllerTest {
 	
 	@Test
 	public void deveRetornarTodasAsComprasDeUmaDeterminadaData() throws Exception {
-		BDDMockito.given(this.compraService.getByDate(COMPRA_DATA.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))).willReturn(compras);
+		BDDMockito.given(this.compraService.getByDate(COMPRA_DATA.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))).willReturn(compras);
 		
-		mvc.perform(MockMvcRequestBuilders.get(URL_BASE + "/shopByDate" + "?date=" + COMPRA_DATA.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+		mvc.perform(MockMvcRequestBuilders.get(URL_BASE + "/shopByDate" + "?date=" + COMPRA_DATA.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString(compras.getFirst().getUserIdentifier())))
@@ -130,7 +130,7 @@ class CompraControllerTest {
 				.andExpect(status().isCreated())
 				.andExpect(content().string(containsString(Float.toString(COMPRA_TOTAL))))
 				.andExpect(content().string(containsString(USUARIO_IDENTIFICADOR)))
-				.andExpect(content().string(containsString(COMPRA_DATA.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))))
+				.andExpect(content().string(containsString(COMPRA_DATA.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))))
 				.andExpect(content().string(containsString(compras.getFirst().getItems().getFirst().getProductIdentifier())))
 				.andExpect(content().string(containsString(Float.toString(compras.getFirst().getItems().getFirst().getPrice()))));
 	}

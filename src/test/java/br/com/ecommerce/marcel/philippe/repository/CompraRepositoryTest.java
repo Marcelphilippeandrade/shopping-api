@@ -4,7 +4,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import br.com.ecommerce.marcel.philippe.modelo.Compra;
 
 @ExtendWith(SpringExtension.class)
@@ -26,7 +27,7 @@ class CompraRepositoryTest {
 	private CompraRepository mockCompraRepository;
 
 	private static final String USUARIO_IDENTIFICADOR = "06618938635";
-	private static final LocalDateTime COMPRA_DATA = LocalDateTime.now();
+	private static final LocalDate COMPRA_DATA = LocalDate.now();
 	private static final float COMPRA_TOTAL = 1000F;
 	private static final long COMPRA_ID = 1L;
 
