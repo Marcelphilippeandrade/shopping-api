@@ -1,9 +1,9 @@
 package br.com.ecommerce.marcel.philippe.repository.impl;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+
 import br.com.ecommerce.marcel.philippe.dto.RelatorioDTO;
 import br.com.ecommerce.marcel.philippe.modelo.Compra;
 import br.com.ecommerce.marcel.philippe.repository.RelatorioRepository;
@@ -17,7 +17,7 @@ public class RelatorioRepositoryImpl implements RelatorioRepository {
 	private EntityManager entityManager;
 
 	@Override
-	public List<Compra> getComprasByFilters(Date dataInicio, Date dataFim, Float valorMinimo) {
+	public List<Compra> getComprasByFilters(LocalDate dataInicio, LocalDate dataFim, Float valorMinimo) {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("select c ");
@@ -32,12 +32,10 @@ public class RelatorioRepositoryImpl implements RelatorioRepository {
 		}
 
 		Query query = entityManager.createQuery(sb.toString());
-		LocalDateTime dataInicioLocalDateTime = dataInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-		query.setParameter("dataInicio", dataInicioLocalDateTime);
+		query.setParameter("dataInicio", dataInicio);
 
 		if (dataFim != null) {
-			LocalDateTime dataFimLocalDateTime = dataFim.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-			query.setParameter("dataFim", dataFimLocalDateTime);
+			query.setParameter("dataFim", dataFim);
 		}
 
 		if (valorMinimo != null) {

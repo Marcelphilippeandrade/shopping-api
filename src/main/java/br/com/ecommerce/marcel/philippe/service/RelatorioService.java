@@ -1,5 +1,6 @@
 package br.com.ecommerce.marcel.philippe.service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +22,7 @@ public class RelatorioService {
 	@Qualifier("relatorioRepositoryImpl")
 	private RelatorioRepository relatorioRepository;
 
-	public List<CompraDTO> getComprasByFilter(Date dataInicio, Date dataFim, Float valorMinimo) {
+	public List<CompraDTO> getComprasByFilter(LocalDate dataInicio, LocalDate dataFim, Float valorMinimo) {
 		List<Compra> compras = relatorioRepository.getComprasByFilters(dataInicio, dataFim, valorMinimo);
 		return compras.stream().map(DTOConverter::convert).collect(Collectors.toList());
 	}
