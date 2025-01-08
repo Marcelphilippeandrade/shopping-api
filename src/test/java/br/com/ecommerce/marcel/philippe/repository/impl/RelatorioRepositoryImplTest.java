@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -41,8 +43,8 @@ class RelatorioRepositoryImplTest {
 		when(query.setParameter(anyString(), any())).thenReturn(query);
 		when(query.getResultList()).thenReturn(expectedCompras);
 
-		Date dataInicio = new Date();
-		Date dataFim = new Date();
+		LocalDate dataInicio = LocalDate.now();
+		LocalDate dataFim = LocalDate.now();
 		Float valorMinimo = 100.0f;
 
 		List<Compra> compras = relatorioRepository.getComprasByFilters(dataInicio, dataFim, valorMinimo);

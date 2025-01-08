@@ -1,5 +1,6 @@
 package br.com.ecommerce.marcel.philippe.controller;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -57,8 +58,8 @@ public class CompraController {
 
 	@GetMapping("/shopping/search")
 	public List<CompraDTO> getComprasByFilter(
-			@RequestParam(name = "dataInicio", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataInicio,
-			@RequestParam(name = "dataFim", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataFim,
+			@RequestParam(name = "dataInicio", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dataInicio,
+			@RequestParam(name = "dataFim", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dataFim,
 			@RequestParam(name = "valorMinimo", required = false) Float valorMinimo) {
 		return relatorioService.getComprasByFilter(dataInicio, dataFim, valorMinimo);
 	}

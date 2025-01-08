@@ -140,7 +140,7 @@ class CompraControllerTest {
 		String dataInicio = new SimpleDateFormat("dd/MM/yyyy").format(DATA_INICIAL);
 		String dataFim = new SimpleDateFormat("dd/MM/yyyy").format(DATA_FINAL);
 		
-		BDDMockito.given(this.relatorioService.getComprasByFilter(Mockito.any(Date.class), Mockito.any(Date.class), Mockito.any(Float.class))).willReturn(compras);
+		BDDMockito.given(this.relatorioService.getComprasByFilter(Mockito.any(LocalDate.class), Mockito.any(LocalDate.class), Mockito.any(Float.class))).willReturn(compras);
 		
 		mvc.perform(MockMvcRequestBuilders.get(URL_BASE + "/search" + "?dataInicio=" + dataInicio + "&" + "dataFim=" + dataFim + "&" + "valorMinimo=" + VALOR_MINIMO)
 				.accept(MediaType.APPLICATION_JSON))
