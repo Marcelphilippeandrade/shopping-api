@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import br.com.ecommerce.marcel.philippe.dto.CompraDTO;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
@@ -34,7 +32,6 @@ public class Compra {
 	private String userIdentifier;
 	private float total;
 	
-	@JsonFormat(pattern = "dd-MM-yyyy")
 	private LocalDate date;
 
 	@ElementCollection(fetch = FetchType.EAGER)
