@@ -40,7 +40,7 @@ public class CompraService {
 	}
 
 	public List<CompraDTO> getByDate(String data) {
-		List<Compra> compras = compraRepository.findAllByDateGreaterThan(LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		List<Compra> compras = compraRepository.findAllByDateGreaterThan(LocalDate.parse(data, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 		return compras.stream().map(CompraDTO::convert).collect(Collectors.toList());
 	}
 

@@ -109,7 +109,7 @@ class CompraControllerTest {
 	public void deveRetornarTodasAsComprasDeUmaDeterminadaData() throws Exception {
 		BDDMockito.given(this.compraService.getByDate(COMPRA_DATA.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))).willReturn(compras);
 		
-		mvc.perform(MockMvcRequestBuilders.get(URL_BASE + "/shopByDate" + "?date=" + COMPRA_DATA.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+		mvc.perform(MockMvcRequestBuilders.get(URL_BASE + "/shopByDate" + "?data=" + COMPRA_DATA.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().string(containsString(compras.getFirst().getUserIdentifier())))
