@@ -61,7 +61,7 @@ public class CompraController {
 	@GetMapping("/shopping/shopByDate")
 	@ResponseStatus(HttpStatus.OK)
 	public List<CompraDTO> getTodasAsCompras(
-			@RequestParam(name = "data", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") String date) {
+			@RequestParam(name = "data", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd") String date) {
 		List<CompraDTO> produtos = compraService.getByDate(date);
 		return produtos;
 	}

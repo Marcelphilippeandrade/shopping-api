@@ -111,7 +111,7 @@ class CompraServiceTest {
 	
 	@Test
 	public void deveRetornarTodasAsComprasApartirDeUmaDeterminadaData() {
-		List<CompraDTO> compras = this.compraService.getByDate(DATA_COMPRA.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+		List<CompraDTO> compras = this.compraService.getByDate(DATA_COMPRA.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 		assertNotNull(compras);
 		assertEquals(DATA_COMPRA, compras.get(0).getDate());
 	}
