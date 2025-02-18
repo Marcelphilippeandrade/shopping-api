@@ -137,8 +137,8 @@ class CompraControllerTest {
 	
 	@Test
 	public void deveBuscarComprasDadoUmaDataInicialOuUmaDataFinalOuUmValorMinimo() throws Exception {
-		String dataInicio = new SimpleDateFormat("dd/MM/yyyy").format(DATA_INICIAL);
-		String dataFim = new SimpleDateFormat("dd/MM/yyyy").format(DATA_FINAL);
+		String dataInicio = new SimpleDateFormat("yyyy-MM-dd").format(DATA_INICIAL);
+		String dataFim = new SimpleDateFormat("yyyy-MM-dd").format(DATA_FINAL);
 		
 		BDDMockito.given(this.relatorioService.getComprasByFilter(Mockito.any(LocalDate.class), Mockito.any(LocalDate.class), Mockito.any(Float.class))).willReturn(compras);
 		

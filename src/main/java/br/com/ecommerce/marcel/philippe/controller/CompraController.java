@@ -81,8 +81,8 @@ public class CompraController {
 	@GetMapping("/shopping/search")
 	@ResponseStatus(HttpStatus.OK)
 	public List<CompraDTO> getComprasByFilter(
-			@RequestParam(name = "dataInicio", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dataInicio,
-			@RequestParam(name = "dataFim", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate dataFim,
+			@RequestParam(name = "dataInicio", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataInicio,
+			@RequestParam(name = "dataFim", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataFim,
 			@RequestParam(name = "valorMinimo", required = false) Float valorMinimo) {
 		return relatorioService.getComprasByFilter(dataInicio, dataFim, valorMinimo);
 	}
