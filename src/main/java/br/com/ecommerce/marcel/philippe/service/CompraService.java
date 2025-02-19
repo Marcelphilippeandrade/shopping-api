@@ -64,7 +64,6 @@ public class CompraService {
 		
 		compraDTO.setTotal(compraDTO.getItems().stream().map(i -> i.getPrice()).reduce((float) 0, Float::sum));
 		Compra compra = Compra.convert(compraDTO);
-		compra.setDate(LocalDate.now());
 		compra = compraRepository.save(compra);
 		return CompraDTO.convert(compra);
 	}

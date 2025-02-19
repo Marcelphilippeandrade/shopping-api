@@ -42,7 +42,7 @@ public class Compra {
 		Compra compra = new Compra();
 		compra.setUserIdentifier(compraDto.getUserIdentifier());
 		compra.setTotal(compraDto.getTotal());
-		compra.setDate(compraDto.getDate());
+		compra.setDate(LocalDate.now());
 		compra.setItems(compraDto.getItems().stream().map(Item::convert).collect(Collectors.toList()));
 		return compra;
 	}
