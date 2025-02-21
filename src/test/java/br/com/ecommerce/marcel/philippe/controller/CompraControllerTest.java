@@ -150,8 +150,8 @@ class CompraControllerTest {
 	
 	@Test
 	public void deveRetornarRelatorioDeComprasDadoUmaDataInicialEUmaDataFinal() throws Exception {
-		String dataInicio = new SimpleDateFormat("dd/MM/yyyy").format(DATA_INICIAL);
-		String dataFim = new SimpleDateFormat("dd/MM/yyyy").format(DATA_FINAL);
+		String dataInicio = new SimpleDateFormat("yyyy-MM-dd").format(DATA_INICIAL);
+		String dataFim = new SimpleDateFormat("yyyy-MM-dd").format(DATA_FINAL);
 		
 		BDDMockito.given(this.relatorioService.getReportByDate(Mockito.any(Date.class), Mockito.any(Date.class))).willReturn(relatorioDto);
 		

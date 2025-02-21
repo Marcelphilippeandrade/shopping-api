@@ -1,0 +1,499 @@
+{
+	"info": {
+		"_postman_id": "68caa38e-7f6d-4a23-af02-b27dbff2f58f",
+		"name": "Shopping-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2086778"
+	},
+	"item": [
+		{
+			"name": "Post Salvar Compra",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Teste para verificar o código de status\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.userIdentifier).to.exist;\r",
+							"    pm.expect(responseData.total).to.exist;\r",
+							"    pm.expect(responseData.date).to.exist;\r",
+							"    pm.expect(responseData.items).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"UserIdentifier is a non-empty string\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData.userIdentifier).to.be.a('string').and.to.have.lengthOf.at.least(1, \"UserIdentifier should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Total is a non-negative number\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData.total).to.be.a('number');\r",
+							"    pm.expect(responseData.total).to.be.at.least(0);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Date is in a valid date format\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.date).to.match(/^\\d{2}-\\d{2}-\\d{4}$/);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "key",
+						"value": "972d5ecf-81c7-49ec-89b4-70a8acc69a19",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userIdentifier\": \"06618938635\",\r\n    \"total\": 100,\r\n    \"items\": [\r\n        {\r\n            \"productIdentifier\": \"p3\",\r\n            \"price\": 100.00\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url_base}}/shopping",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"shopping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Compras",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(325);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response body is not empty\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData).to.not.be.empty;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains the expected shopping items\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+							"\r",
+							"    responseData.forEach(function(order) {\r",
+							"        pm.expect(order).to.be.an('object').that.has.all.keys('userIdentifier', 'total', 'date', 'items');\r",
+							"\r",
+							"        pm.expect(order.items).to.be.an('array').that.is.not.empty;\r",
+							"\r",
+							"        order.items.forEach(function(item) {\r",
+							"            pm.expect(item).to.be.an('object').that.has.all.keys('productIdentifier', 'price');\r",
+							"        });\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Price and quantity are non-negative numbers\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+							"\r",
+							"    responseData.forEach(function(order) {\r",
+							"        pm.expect(order.items).to.be.an('array').that.is.not.empty;\r",
+							"\r",
+							"        order.items.forEach(function(item) {\r",
+							"            pm.expect(item).to.have.property('productIdentifier'); \r",
+							"            pm.expect(item.productIdentifier).to.be.a('string');\r",
+							"\r",
+							"            pm.expect(item).to.have.property('price'); \r",
+							"            pm.expect(item.price).to.be.a('number').and.to.be.at.least(0);\r",
+							"        });\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "key",
+						"value": "972d5ecf-81c7-49ec-89b4-70a8acc69a19",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url_base}}/shopping",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"shopping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Compras Usuario-userIdentifier",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(325);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the expected structure\", function () {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    pm.expect(jsonResponse).to.be.an(\"array\");\r",
+							"    pm.expect(jsonResponse[0]).to.have.property(\"userIdentifier\").to.be.a('string');\r",
+							"    pm.expect(jsonResponse[0]).to.have.property(\"total\").to.be.a('number');\r",
+							"    pm.expect(jsonResponse[0]).to.have.property(\"date\").to.be.a('string');\r",
+							"    pm.expect(jsonResponse[0]).to.have.property(\"items\").to.be.a('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Date format is correct\", function () {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    var datePattern = /^\\d{2}-\\d{2}-\\d{4}$/; // Formato dd-MM-yyyy\r",
+							"    pm.expect(jsonResponse[0].date).to.match(datePattern);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Items array contains expected properties\", function () {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    pm.expect(jsonResponse[0].items[0]).to.have.property(\"productIdentifier\");\r",
+							"    pm.expect(jsonResponse[0].items[0]).to.have.property(\"price\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url_base}}/shopping/shopByUser/{{userIdentifier}}",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"shopping",
+						"shopByUser",
+						"{{userIdentifier}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Compras-Date",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(325);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the expected structure\", function () {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    pm.expect(jsonResponse).to.be.an(\"array\");\r",
+							"    pm.expect(jsonResponse[0]).to.have.property(\"userIdentifier\").to.be.a('string');\r",
+							"    pm.expect(jsonResponse[0]).to.have.property(\"total\").to.be.a('number');\r",
+							"    pm.expect(jsonResponse[0]).to.have.property(\"date\").to.be.a('string');\r",
+							"    pm.expect(jsonResponse[0]).to.have.property(\"items\").to.be.an('array');\r",
+							"    pm.expect(jsonResponse[0].items[0].productIdentifier).to.be.a('string');\r",
+							"    pm.expect(jsonResponse[0].items[0].price).to.be.a('number');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Date format is correct\", function () {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    var datePattern = /^\\d{2}-\\d{2}-\\d{4}$/; // Formato dd-MM-yyyy\r",
+							"    jsonResponse.forEach(entry => {\r",
+							"        pm.expect(entry.date).to.match(datePattern);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Items array contains expected properties\", function () {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    jsonResponse.forEach(entry => {\r",
+							"        pm.expect(entry.items[0]).to.have.property(\"productIdentifier\");\r",
+							"        pm.expect(entry.items[0]).to.have.property(\"price\");\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url_base}}/shopping/shopByDate?data={{data}}",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"shopping",
+						"shopByDate"
+					],
+					"query": [
+						{
+							"key": "data",
+							"value": "{{data}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Compras-Search",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(325);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the expected structure\", function () {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    pm.expect(jsonResponse).to.be.an(\"array\");\r",
+							"    pm.expect(jsonResponse[0]).to.have.property(\"userIdentifier\").to.be.a('string');\r",
+							"    pm.expect(jsonResponse[0]).to.have.property(\"total\").to.be.a('number');\r",
+							"    pm.expect(jsonResponse[0]).to.have.property(\"date\").to.be.a('string');\r",
+							"    pm.expect(jsonResponse[0]).to.have.property(\"items\").to.be.an('array');\r",
+							"    pm.expect(jsonResponse[0].items[0].productIdentifier).to.be.a('string');\r",
+							"    pm.expect(jsonResponse[0].items[0].price).to.be.a('number');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Date format is correct\", function () {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    var datePattern = /^\\d{2}-\\d{2}-\\d{4}$/; // Formato dd-MM-yyyy\r",
+							"    jsonResponse.forEach(entry => {\r",
+							"        pm.expect(entry.date).to.match(datePattern);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Items array contains expected properties\", function () {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    jsonResponse.forEach(entry => {\r",
+							"        pm.expect(entry.items[0]).to.have.property(\"productIdentifier\");\r",
+							"        pm.expect(entry.items[0]).to.have.property(\"price\");\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url_base}}/shopping/search?dataInicio={{dataInicio}}&dataFim={{dataFim}}",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"shopping",
+						"search"
+					],
+					"query": [
+						{
+							"key": "dataInicio",
+							"value": "{{dataInicio}}"
+						},
+						{
+							"key": "dataFim",
+							"value": "{{dataFim}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Compras-Report",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the expected structure\", function () {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    pm.expect(jsonResponse).to.have.property(\"quantidade\").to.be.a('number');\r",
+							"    pm.expect(jsonResponse).to.have.property(\"total\").to.be.a('number');\r",
+							"    pm.expect(jsonResponse).to.have.property(\"media\").to.be.a('number');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Average is correct\", function () {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    var expectedAverage = jsonResponse.total / jsonResponse.quantidade;\r",
+							"    pm.expect(jsonResponse.media).to.eql(expectedAverage);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url_base}}/shopping/report?dataInicio={{dataInicio}}&dataFim={{dataFim}}",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"shopping",
+						"report"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "dataInicio",
+							"value": "{{dataInicio}}"
+						},
+						{
+							"key": "dataFim",
+							"value": "{{dataFim}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get API-Docs",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url_base}}/shopping/v3/api-docs",
+					"host": [
+						"{{url_base}}"
+					],
+					"path": [
+						"shopping",
+						"v3",
+						"api-docs"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

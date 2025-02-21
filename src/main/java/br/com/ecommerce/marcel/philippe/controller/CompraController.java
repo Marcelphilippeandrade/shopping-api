@@ -93,8 +93,8 @@ public class CompraController {
 	@GetMapping("/shopping/report")
 	@ResponseStatus(HttpStatus.OK)
 	public RelatorioDTO getRelatorioByDate(
-			@RequestParam(name = "dataInicio", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataInicio,
-			@RequestParam(name = "dataFim", required = true) @DateTimeFormat(pattern = "dd/MM/yyyy") Date dataFim) {
+			@RequestParam(name = "dataInicio", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataInicio,
+			@RequestParam(name = "dataFim", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataFim) {
 		return relatorioService.getReportByDate(dataInicio, dataFim);
 	}
 }
